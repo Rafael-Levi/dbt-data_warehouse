@@ -18,7 +18,7 @@ clean-targets:
   - "dbt_packages"
 
 models:
-  jornada_dw:
+  projeto_dw:
     staging:
       +materialized: view
     

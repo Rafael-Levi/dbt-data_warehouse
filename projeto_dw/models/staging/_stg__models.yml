@@ -80,7 +80,3 @@ models:
           - not_null
       - name: etl_inserted_at
         description: "Timestamp de quando o dado foi carregado no modelo"
-      
-  - name: stg_cadastros_2
-
-  - name: stg_luciano
