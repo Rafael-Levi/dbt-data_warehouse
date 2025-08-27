@@ -130,3 +130,98 @@ models:
         description: "Variação no número de pedidos em relação ao dia anterior"
       - name: taxa_crescimento_pedidos_diaria
         description: "Taxa de crescimento diária do número de pedidos (em %)"
+
+  - name: mart_metricas_powerBI
+    description: "Métricas agregadas por cliente para análises de e-commerce, incluindo RFM, datas, ticket médio, valor gasto e taxa de crescimento."
+    config:
+      materialized: table
+    columns:
+      - name: sk_cliente
+        description: "Chave substituta única do cliente."
+        tests:
+          - not_null
+          - unique
+      - name: cpf
+        description: "CPF do cliente (identificador de pessoa física)."
+      - name: nome
+        description: "Nome do cliente."
+      - name: estado
+        description: "Estado de residência do cliente."
+      - name: cidade
+        description: "Cidade de residência do cliente."
+      - name: total_pedidos
+        description: "Número total de pedidos feitos pelo cliente."
+        tests:
+          - not_null
+      - name: valor_total_gasto
+        description: "Soma do valor total gasto pelo cliente em todos os pedidos."
+      - name: ticket_medio
+        description: "Valor médio gasto por pedido do cliente."
+      - name: data_primeiro_pedido
+        description: "Data do primeiro pedido do cliente."
+      - name: data_ultimo_pedido
+        description: "Data do último pedido do cliente."
+      - name: primeiro_ano_compra
+        description: "Ano do primeiro pedido realizado."
+      - name: ultimo_ano_compra
+        description: "Ano do último pedido realizado."
+      - name: total_anos_ativos
+        description: "Quantidade de anos em que o cliente realizou compras."
+      - name: dias_desde_ultimo_pedido
+        description: "Quantidade de dias desde o último pedido realizado."
+      - name: frequencia_media_dias
+        description: "Intervalo médio em dias entre os pedidos do cliente."
+      - name: valor_medio_por_mes
+        description: "Valor médio gasto por mês pelo cliente."
+      - name: frequencia_media_mensal
+        description: "Quantidade média de pedidos por mês."
+      - name: segmento_rfm
+        description: "Segmento do cliente de acordo com a análise RFM (ex: Campeão, Cliente Fiel, Potencial, Em Risco, etc.)."
+      - name: score_valor
+        description: "Score de Valor do cliente (1-5)."
+      - name: score_recencia
+        description: "Score de Recência do cliente (1-5)."
+      - name: score_frequencia
+        description: "Score de Frequência do cliente (1-5)."
+      - name: taxa_crescimento_vs_media
+        description: "Taxa de crescimento do cliente comparada à média da base."
+      - name: estacao_preferida
+        description: "Estação em que o cliente mais realizou compras."
+      - name: dbt_updated_at
+        description: "Timestamp da última atualização do registro."
+      - name: dbt_loaded_at
+        description: "Timestamp da execução do job do dbt."
+
+  - name: mart_pedidos_dia_semana
+    description: "Número de pedidos realizados por cliente, segmentado por dia da semana."
+    config:
+      materialized: table
+    columns:
+      - name: sk_cliente
+        description: "Chave substituta do cliente (relacionamento com mart_metricas_clientes)."
+        tests:
+          - not_null
+          - unique
+      - name: dia_semana
+        description: "Nome do dia da semana em que os pedidos foram realizados."
+        tests:
+          - not_null
+      - name: pedidos_semana
+        description: "Número de pedidos feitos pelo cliente naquele dia da semana."
+
+  - name: mart_pedidos_estacao
+    description: "Número de pedidos realizados por cliente, segmentado por estação do ano."
+    config:
+      materialized: table
+    columns:
+      - name: sk_cliente
+        description: "Chave substituta do cliente (relacionamento com mart_metricas_clientes)."
+        tests:
+          - not_null
+          - unique
+      - name: estacao
+        description: "Estação do ano (Verão, Outono, Inverno, Primavera)."
+        tests:
+          - not_null
+      - name: pedidos_estacao
+        description: "Número de pedidos feitos pelo cliente naquela estação."
