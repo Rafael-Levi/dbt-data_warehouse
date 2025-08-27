@@ -201,7 +201,6 @@ models:
         description: "Chave substituta do cliente (relacionamento com mart_metricas_clientes)."
         tests:
           - not_null
-          - unique
       - name: dia_semana
         description: "Nome do dia da semana em que os pedidos foram realizados."
         tests:
@@ -218,7 +217,6 @@ models:
         description: "Chave substituta do cliente (relacionamento com mart_metricas_clientes)."
         tests:
           - not_null
-          - unique
       - name: estacao
         description: "Estação do ano (Verão, Outono, Inverno, Primavera)."
         tests:
